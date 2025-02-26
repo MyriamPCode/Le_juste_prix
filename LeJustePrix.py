@@ -11,7 +11,7 @@ fenetre.geometry("640x480");
 
 essai = 0;
 maxEssai = 5;
-proposition =[];
+propositions =[];
 
 def propositionUne() :
     try:
@@ -58,15 +58,35 @@ def propositionFinale() :
         int(input("Veuillez entrer une dernière proposition : "));
         return propositionFinale();
 
-def evaluationPrix(nombre) :
-    if nombre < nombreADeviner :
-        print("Le prix proposé est plus bas que le juste prix !");
-    elif nombre == nombreADeviner :
-        print("Félicitations ! Vous venez de remporter le juste prix !");
-        return True;
-    else :
-        print("Le prix proposé est plus haut que le juste prix ! ");
-        return False;
+#def evaluationPrix(nombre) :
+    #if nombre < nombreADeviner :
+        #print("Le prix proposé est plus bas que le juste prix !");
+    #elif nombre == nombreADeviner :
+        #print("Félicitations ! Vous venez de remporter le juste prix !");
+        #return True;
+    #else :
+        #print("Le prix proposé est plus haut que le juste prix ! ");
+        #return False;
+
+def evaluationPrix():
+    global essai;
+    try:
+        proposition = int(saisie.get());
+        propositions.append(proposition);
+
+        if proposition < nombreADeviner :
+            message["text"] = "Le prix proposé est plus bas que le juste prix.";
+        elif proposition == nombreADeviner :
+            message["text"] = "Félicitations ! Vous avez trouvé le juste prix !";
+            boutonProposer.config(state=DISABLED); #Le bouton Proposer n'est plus désactivé
+            return
+        else :
+            message["text"] = "Le prix proposé est plus haut que le juste prix.";
+
+        essai +=1;
+    except ValueError:
+        message["text"] = "Erreur : Veuillez entrer un nombre entier.";
+
 
 """def deroulementJeu() :
     essai = 0;
@@ -113,11 +133,13 @@ texteBienvenue = Label(fenetre, text =""" =======  Bienvenue dans le juste prix 
     """, font=("Arial",12), justify=CENTER);
 texteBienvenue.pack(pady=10);
 
-saisie=Entry(fenetre, font=("Arial", 14))
-saisie.pack(pady=10);
-
 message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
 message.pack(pady=20);
+
+essaiMessage = Label(fenetre, text =f"Essai {essai + 1} sur {maxEssai} :", font=("Arial", 12));
+
+saisie=Entry(fenetre, font=("Arial", 14))
+saisie.pack(pady=10);
 
 boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
 boutonProposer.pack(pady=10);
