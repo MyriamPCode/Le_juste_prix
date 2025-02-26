@@ -7,7 +7,11 @@ nombreADeviner = random.randint(1, 20);
 fenetre = Tk();
 fenetre.title("Le juste prix !");
 fenetre.config(bg = "#87CEEB") # Couleur bleue
-fenetre.mainloop();
+fenetre.geometry("640x480");
+
+essai = 0;
+maxEssai = 5;
+proposition =[];
 
 def propositionUne() :
     try:
@@ -64,10 +68,9 @@ def evaluationPrix(nombre) :
         print("Le prix proposé est plus haut que le juste prix ! ");
         return False;
 
-def deroulementJeu() :
+"""def deroulementJeu() :
     essai = 0;
     maxEssai = 5;
-
     while essai < maxEssai :
         print(f"Essai {essai +1} sur {maxEssai} :")
         if essai == 0:
@@ -85,17 +88,38 @@ def deroulementJeu() :
             break;
 
         essai += 1;
+"""
+        #if essai == maxEssai and proposition != nombreADeviner :
+            #print(f"""Désolé, vous avez perdu. Le juste prix était : {nombreADeviner} !
+            #Merci d'avoir joué !
+            #À bientôt !
+            #""");"""
 
-        if essai == maxEssai and proposition != nombreADeviner :
-            print(f"""Désolé, vous avez perdu. Le juste prix était : {nombreADeviner} !
-            Merci d'avoir joué !
-            À bientôt !
-            """);
 
-if __name__ == "__main__":
-    print(""" =======  Bienvenue dans le juste prix !  =======
+
+#if __name__ == "__main__":
+    #print(""" =======  Bienvenue dans le juste prix !  =======
+    #Vous avez droit à plusieurs possibilités pour trouver le juste prix.
+    #Après cinq erreurs, c'est terminé.
+    #Bonne chance à vous !
+    #""");
+    #deroulementJeu();
+
+
+texteBienvenue = Label(fenetre, text =""" =======  Bienvenue dans le juste prix !  =======
     Vous avez droit à plusieurs possibilités pour trouver le juste prix.
     Après cinq erreurs, c'est terminé.
     Bonne chance à vous !
-    """);
-    deroulementJeu();
+    """, font=("Arial",12), justify=CENTER);
+texteBienvenue.pack(pady=10);
+
+saisie=Entry(fenetre, font=("Arial", 14))
+saisie.pack(pady=10);
+
+message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
+message.pack(pady=20);
+
+boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
+boutonProposer.pack(pady=10);
+
+fenetre.mainloop();
