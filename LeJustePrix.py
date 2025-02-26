@@ -84,9 +84,27 @@ def evaluationPrix():
             message["text"] = "Le prix proposé est plus haut que le juste prix.";
 
         essai +=1;
+        afficherEssai();
+
+        if essai >= maxEssai :
+            message["text"] = f"Désolé, vous avez perdu. Le juste prix était {nombreADeviner} : ";
+            boutonProposer.config(state=DISABLED);
+
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
 
+def afficherEssai() :
+    essaiMessage["text"] = f"Essai {essai + 1} sur {maxEssai} : "
+
+def resetJeu() :
+    global essai, nombreADeviner, propositions;
+    essai = 0;
+    propositions = [];
+    nombreADeviner = random.randint(1, 20);
+    message["text"] = "Veuillez entrer une proposition :";
+    saisie.delete(0, END);
+    boutonProposer.config(state=NORMAL);
+    essaiMessage["text"]= f"Essai {essai + 1} sur {maxEssai}";
 
 """def deroulementJeu() :
     essai = 0;
@@ -137,11 +155,15 @@ message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial"
 message.pack(pady=20);
 
 essaiMessage = Label(fenetre, text =f"Essai {essai + 1} sur {maxEssai} :", font=("Arial", 12));
+essaiMessage.pack(pady=10);
 
 saisie=Entry(fenetre, font=("Arial", 14))
 saisie.pack(pady=10);
 
 boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
 boutonProposer.pack(pady=10);
+
+boutonReset = Button(fenetre , text="Réinitialiser la partie", font=("Arial", 12), command=resetJeu);
+boutonReset.pack(pady=10);
 
 fenetre.mainloop();
