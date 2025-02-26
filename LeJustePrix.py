@@ -5,7 +5,7 @@ nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
 fenetre = Tk();
-fenetre.title("Le juste prix");
+fenetre.title("Le juste prix !");
 fenetre.config(bg = "#87CEEB") # Couleur bleue
 fenetre.mainloop();
 
