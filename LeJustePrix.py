@@ -106,6 +106,11 @@ def resetJeu() :
     boutonProposer.config(state=NORMAL);
     essaiMessage["text"]= f"Essai {essai + 1} sur {maxEssai}";
 
+def defilementTexte(texte, index=0) :
+    if index< len(texte) :
+        texteBienvenue.config(text=texte[index+1]);
+        fenetre.after(100, defilementTexte, texte, index+1);
+
 """def deroulementJeu() :
     essai = 0;
     maxEssai = 5;
