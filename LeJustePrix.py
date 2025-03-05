@@ -1,6 +1,10 @@
 import random
 from tkinter import *
+import pygame   # Pour jouer des sons
 
+pygame.mixer.init()
+
+sonVictoire = pygame.mixer.Sound('victoire.wav')
 nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
@@ -79,6 +83,7 @@ def evaluationPrix():
         elif proposition == nombreADeviner :
             message["text"] = "Félicitations ! Vous avez trouvé le juste prix !";
             boutonProposer.config(state=DISABLED); #Le bouton Proposer n'est plus désactivé
+            sonVictoire.play()
             return
         else :
             message["text"] = "Le prix proposé est plus haut que le juste prix.";
