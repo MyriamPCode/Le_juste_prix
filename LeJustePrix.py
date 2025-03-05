@@ -89,6 +89,8 @@ def evaluationPrix():
         if essai >= maxEssai :
             message["text"] = f"Désolé, vous avez perdu. Le juste prix était {nombreADeviner} : ";
             boutonProposer.config(state=DISABLED);
+            essaiMessage["text"]= "";
+            essaiMessage.config(bg = "#87CEEB") #Le fond du message est de la même couleur que le background
 
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
@@ -111,6 +113,7 @@ def defilementTexte(texte, index=0, texteAffiche="") :
         texteAffiche += texte[index];
         texteBienvenue.config(text=texteAffiche);
         fenetre.after(100, defilementTexte, texte, index+1, texteAffiche);
+
 
 
 """def deroulementJeu() :
