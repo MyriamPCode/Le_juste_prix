@@ -106,10 +106,12 @@ def resetJeu() :
     boutonProposer.config(state=NORMAL);
     essaiMessage["text"]= f"Essai {essai + 1} sur {maxEssai}";
 
-def defilementTexte(texte, index=0) :
+def defilementTexte(texte, index=0, texteAffiche="") :
     if index< len(texte) :
-        texteBienvenue.config(text=texte[index+1]);
-        fenetre.after(100, defilementTexte, texte, index+1);
+        texteAffiche += texte[index];
+        texteBienvenue.config(text=texteAffiche);
+        fenetre.after(100, defilementTexte, texte, index+1, texteAffiche);
+
 
 """def deroulementJeu() :
     essai = 0;
@@ -149,12 +151,14 @@ def defilementTexte(texte, index=0) :
     #deroulementJeu();
 
 
-texteBienvenue = Label(fenetre, text =""" =======  Bienvenue dans le juste prix !  =======
+texteBienvenue = Label(fenetre, text ="", font=("Arial",12), justify=CENTER);
+texteBienvenue.pack(pady=10);
+
+defilementTexte(""" =======  Bienvenue dans le juste prix !  =======
     Vous avez droit à plusieurs possibilités pour trouver le juste prix.
     Après cinq erreurs, c'est terminé.
     Bonne chance à vous !
-    """, font=("Arial",12), justify=CENTER);
-texteBienvenue.pack(pady=10);
+    """);
 
 message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
 message.pack(pady=20);
