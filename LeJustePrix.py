@@ -5,6 +5,8 @@ import pygame   # Pour jouer des sons
 pygame.mixer.init()
 
 sonVictoire = pygame.mixer.Sound('victory.wav')
+sonJeu = pygame.mixer.Sound('we_remain_united.mp3')
+
 nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
@@ -12,6 +14,7 @@ fenetre = Tk();
 fenetre.title("Le juste prix !");
 fenetre.config(bg = "#87CEEB") # Couleur bleue
 fenetre.geometry("640x480");
+sonJeu.play()
 
 essai = 0;
 maxEssai = 5;
@@ -84,6 +87,7 @@ def evaluationPrix():
             message["text"] = "Félicitations ! Vous avez trouvé le juste prix !";
             boutonProposer.config(state=DISABLED); #Le bouton Proposer n'est plus désactivé
             sonVictoire.play()
+            sonJeu.stop()
             return
         else :
             message["text"] = "Le prix proposé est plus haut que le juste prix.";
@@ -96,6 +100,7 @@ def evaluationPrix():
             boutonProposer.config(state=DISABLED);
             essaiMessage["text"]= "";
             essaiMessage.config(bg = "#87CEEB") #Le fond du message est de la même couleur que le background
+            sonJeu.stop()
 
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
