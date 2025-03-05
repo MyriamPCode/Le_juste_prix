@@ -6,6 +6,7 @@ pygame.mixer.init()
 
 sonVictoire = pygame.mixer.Sound('victory.wav')
 sonJeu = pygame.mixer.Sound('we_remain_united.mp3')
+sonDefaite = pygame.mixer.Sound('game_over.wav')
 
 nombreADeviner = random.randint(1, 20);
 
@@ -96,11 +97,12 @@ def evaluationPrix():
         afficherEssai();
 
         if essai >= maxEssai :
-            message["text"] = f"Désolé, vous avez perdu. Le juste prix était {nombreADeviner} : ";
+            message["text"] = f"Désolé, vous avez perdu. Le juste prix était : {nombreADeviner}";
             boutonProposer.config(state=DISABLED);
             essaiMessage["text"]= "";
             essaiMessage.config(bg = "#87CEEB") #Le fond du message est de la même couleur que le background
             sonJeu.stop()
+            sonDefaite.play()
 
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
@@ -117,6 +119,9 @@ def resetJeu() :
     saisie.delete(0, END);
     boutonProposer.config(state=NORMAL);
     essaiMessage["text"]= f"Essai {essai + 1} sur {maxEssai}";
+    sonJeu.play()
+    sonDefaite.stop()
+    sonVictoire.stop()
 
 def defilementTexte(texte, index=0, texteAffiche="") :
     if index< len(texte) :
