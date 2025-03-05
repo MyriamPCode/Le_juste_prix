@@ -4,7 +4,7 @@ import pygame   # Pour jouer des sons
 
 pygame.mixer.init()
 
-sonVictoire = pygame.mixer.Sound('victoire.wav')
+sonVictoire = pygame.mixer.Sound('victory.wav')
 nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
