@@ -8,6 +8,8 @@ sonVictoire = pygame.mixer.Sound('victory.wav')
 sonJeu = pygame.mixer.Sound('we_remain_united.mp3')
 sonDefaite = pygame.mixer.Sound('game_over.wav')
 
+sonJeu.set_volume(0.5)
+
 nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
