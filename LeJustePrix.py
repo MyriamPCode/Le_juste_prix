@@ -1,6 +1,10 @@
 import random
 from tkinter import *
+import pygame   # Pour jouer des sons
 
+pygame.mixer.init()
+
+sonVictoire = pygame.mixer.Sound('victoire.wav')
 nombreADeviner = random.randint(1, 20);
 
 #Création d'une fenêtre d'affichage
@@ -79,6 +83,7 @@ def evaluationPrix():
         elif proposition == nombreADeviner :
             message["text"] = "Félicitations ! Vous avez trouvé le juste prix !";
             boutonProposer.config(state=DISABLED); #Le bouton Proposer n'est plus désactivé
+            sonVictoire.play()
             return
         else :
             message["text"] = "Le prix proposé est plus haut que le juste prix.";
@@ -89,6 +94,8 @@ def evaluationPrix():
         if essai >= maxEssai :
             message["text"] = f"Désolé, vous avez perdu. Le juste prix était {nombreADeviner} : ";
             boutonProposer.config(state=DISABLED);
+            essaiMessage["text"]= "";
+            essaiMessage.config(bg = "#87CEEB") #Le fond du message est de la même couleur que le background
 
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
@@ -111,6 +118,7 @@ def defilementTexte(texte, index=0, texteAffiche="") :
         texteAffiche += texte[index];
         texteBienvenue.config(text=texteAffiche);
         fenetre.after(100, defilementTexte, texte, index+1, texteAffiche);
+
 
 
 """def deroulementJeu() :
