@@ -68,7 +68,7 @@ def propositionFinale() :
         int(input("Veuillez entrer une dernière proposition : "));
         return propositionFinale();
 
-def evaluationPrix(essaiMessage, saisie):
+def evaluationPrix(essaiMessage, message,saisie, boutonProposer):
     global essai;
     try:
         proposition = int(saisie.get());
@@ -81,13 +81,13 @@ def evaluationPrix(essaiMessage, saisie):
             boutonProposer.config(state=DISABLED); #Le bouton Proposer n'est plus désactivé
             sonVictoire.play()
             sonJeu.stop()
-            fenetre.config(bg = "#7adb30")
+            fenetre.config(bg = "#7adb30") #Couleur verte
             return
         else :
             message["text"] = "Le prix proposé est plus haut que le juste prix.";
 
         essai +=1;
-        afficherEssai();
+        afficherEssai(essaiMessage);
 
         if essai >= maxEssai :
             message["text"] = f"Désolé, vous avez perdu. Le juste prix était : {nombreADeviner}";
@@ -96,7 +96,7 @@ def evaluationPrix(essaiMessage, saisie):
             essaiMessage.config(bg = "#f44336") #Le fond du message est de la même couleur que le background
             sonJeu.stop()
             sonDefaite.play()
-            fenetre.config(bg = "#f44336")
+            fenetre.config(bg = "#f44336") #Couleur rouge
 
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
@@ -157,10 +157,10 @@ def modeFacile() :
     saisie = Entry(fenetre, font=("Arial", 14))
     saisie.pack(pady=10);
 
-    boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
+    boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=lambda:evaluationPrix(essaiMessage, message, saisie, boutonProposer));
     boutonProposer.pack(pady=10);
 
-    boutonReset = Button(fenetre, text="Réinitialiser la partie", font=("Arial", 12), command=resetJeu);
+    boutonReset = Button(fenetre, text="Réinitialiser la partie", font=("Arial", 12), command=lambda:resetJeu(essaiMessage,message,saisie,boutonProposer));
     boutonReset.pack(pady=10);
 
 
