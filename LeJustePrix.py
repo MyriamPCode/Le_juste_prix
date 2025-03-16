@@ -68,7 +68,7 @@ def propositionFinale() :
         int(input("Veuillez entrer une dernière proposition : "));
         return propositionFinale();
 
-def evaluationPrix():
+def evaluationPrix(essaiMessage, saisie):
     global essai;
     try:
         proposition = int(saisie.get());
@@ -101,10 +101,10 @@ def evaluationPrix():
     except ValueError:
         message["text"] = "Erreur : Veuillez entrer un nombre entier.";
 
-def afficherEssai() :
+def afficherEssai(essaiMessage) :
     essaiMessage["text"] = f"Essai {essai + 1} sur {maxEssai} : "
 
-def resetJeu() :
+def resetJeu(essaiMessage,message,saisie,boutonProposer) :
     global essai, nombreADeviner, propositions;
     essai = 0;
     propositions = [];
@@ -119,35 +119,60 @@ def resetJeu() :
     sonDefaite.stop()
     sonVictoire.stop()
 
+texteBienvenue = Label(fenetre, text="", font=("Arial", 12), justify=CENTER);
+texteBienvenue.pack_forget()
+
 def defilementTexte(texte, index=0, texteAffiche="") :
     if index< len(texte) :
         texteAffiche += texte[index];
         texteBienvenue.config(text=texteAffiche);
-        fenetre.after(100, defilementTexte, texte, index+1, texteAffiche);
+        fenetre.after(40, defilementTexte, texte, index+1, texteAffiche);
+    else:
+        texteBienvenue.config(text=texte)
 
 
-texteBienvenue = Label(fenetre, text ="", font=("Arial",12), justify=CENTER);
-texteBienvenue.pack(pady=10);
+def cacherBouton() :
+    boutonFacile.pack_forget()
+    boutonNormal.pack_forget()
 
-defilementTexte(""" =======  Bienvenue dans le juste prix !  =======
+def modeFacile() :
+    global nombreADeviner
+    texteTitre.pack_forget()
+    cacherBouton()
+    nombreADeviner = random.randint(1, 20)
+    texteBienvenue.pack(pady=10)
+    defilementTexte(""" =======  Bienvenue dans le juste prix !  =======
     Vous avez droit à plusieurs possibilités pour trouver le juste prix.
+    Le juste prix est compris entre 1 et 20$
     Après cinq erreurs, c'est terminé.
     Bonne chance à vous !
-    """);
+    """)
 
-message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
-message.pack(pady=20);
+    message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
+    message.pack(pady=20);
 
-essaiMessage = Label(fenetre, text =f"Essai {essai + 1} sur {maxEssai} :", font=("Arial", 12));
-essaiMessage.pack(pady=10);
+    essaiMessage = Label(fenetre, text=f"Essai {essai + 1} sur {maxEssai} :", font=("Arial", 12));
+    essaiMessage.pack(pady=10);
 
-saisie=Entry(fenetre, font=("Arial", 14))
-saisie.pack(pady=10);
+    saisie = Entry(fenetre, font=("Arial", 14))
+    saisie.pack(pady=10);
 
-boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
-boutonProposer.pack(pady=10);
+    boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=evaluationPrix);
+    boutonProposer.pack(pady=10);
 
-boutonReset = Button(fenetre , text="Réinitialiser la partie", font=("Arial", 12), command=resetJeu);
-boutonReset.pack(pady=10);
+    boutonReset = Button(fenetre, text="Réinitialiser la partie", font=("Arial", 12), command=resetJeu);
+    boutonReset.pack(pady=10);
+
+
+texteTitre = Label(fenetre, text= "Le juste prix", font=("Arial", 20))
+texteTitre.pack(pady=20)
+
+boutonFacile = Button(fenetre, text="Facile", font=("Arial", 12), command=modeFacile)
+boutonFacile.pack(pady=10)
+
+boutonNormal = Button(fenetre, text="Normal", font=("Arial", 12))
+boutonNormal.pack(pady=10)
+
+
 
 fenetre.mainloop();
