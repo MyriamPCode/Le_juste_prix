@@ -115,7 +115,6 @@ def resetJeu(essaiMessage,message,saisie,boutonProposer) :
     saisie.delete(0, END);
     boutonProposer.config(state=NORMAL);
     essaiMessage["text"]= f"Essai {essai + 1} sur {maxEssai}";
-    sonJeu.play()
     sonDefaite.stop()
     sonVictoire.stop()
 
@@ -131,41 +130,73 @@ def defilementTexte(texte, index=0, texteAffiche="") :
         texteBienvenue.config(text=texte)
 
 
-def cacherBouton() :
+def cacherBoutonsMode() :
     boutonFacile.pack_forget()
     boutonNormal.pack_forget()
+
+def cacherInterfaceJeu(message,essaiMessage,saisie,boutonProposer,boutonReset,boutonMenuPrincipal) :
+    texteBienvenue.pack_forget()
+    message.pack_forget()
+    essaiMessage.pack_forget()
+    saisie.pack_forget()
+    boutonProposer.pack_forget()
+    boutonReset.pack_forget()
+    boutonMenuPrincipal.pack_forget()
+
+def retourMenuPrincipal(message,essaiMessage,saisie,boutonProposer,boutonReset,boutonMenuPrincipal) :
+    texteTitre.pack(pady=10)
+    cacherInterfaceJeu(message,essaiMessage,saisie,boutonProposer,boutonReset,boutonMenuPrincipal)
+    boutonFacile.pack(pady=10)
+    boutonNormal.pack(pady=10)
 
 def modeFacile() :
     global nombreADeviner
     texteTitre.pack_forget()
-    cacherBouton()
+    cacherBoutonsMode()
     nombreADeviner = random.randint(1, 20)
-    texteBienvenue.pack(pady=10)
-    defilementTexte(""" =======  Bienvenue dans le juste prix !  =======
-    Vous avez droit à plusieurs possibilités pour trouver le juste prix.
-    Le juste prix est compris entre 1 et 20$
-    Après cinq erreurs, c'est terminé.
-    Bonne chance à vous !
-    """)
 
     message = Label(fenetre, text="Veuillez entrer une proposition :", font=("Arial", 12));
-    message.pack(pady=20);
+    message.pack(pady=20)
 
     essaiMessage = Label(fenetre, text=f"Essai {essai + 1} sur {maxEssai} :", font=("Arial", 12));
-    essaiMessage.pack(pady=10);
+    essaiMessage.pack(pady=10)
 
     saisie = Entry(fenetre, font=("Arial", 14))
-    saisie.pack(pady=10);
+    saisie.pack(pady=10)
 
     boutonProposer = Button(fenetre, text="Proposer", font=("Arial", 12), command=lambda:evaluationPrix(essaiMessage, message, saisie, boutonProposer));
-    boutonProposer.pack(pady=10);
+    boutonProposer.pack(pady=10)
 
     boutonReset = Button(fenetre, text="Réinitialiser la partie", font=("Arial", 12), command=lambda:resetJeu(essaiMessage,message,saisie,boutonProposer));
-    boutonReset.pack(pady=10);
+    boutonReset.pack(pady=10)
+
+    boutonMenuPrincipal = Button(fenetre, text="Retour au menu principal", font=("Arial",12), command=lambda:retourMenuPrincipal(message,essaiMessage,saisie,boutonProposer,boutonReset,boutonMenuPrincipal))
+    boutonMenuPrincipal.pack(pady=10)
+    #if 'texteBienvenue' in globals():
+        #texteBienvenue.pack_forget()
+    if 'message' in globals():
+        message.pack_forget()
+    if 'essaiMessage' in globals():
+        essaiMessage.pack_forget()
+    if 'saisie' in globals():
+        saisie.pack_forget()
+    if 'boutonProposer' in globals():
+        boutonProposer.pack_forget()
+    if 'boutonReset' in globals():
+        boutonReset.pack_forget()
+    if 'boutonMenuPrincipal' in globals():
+        boutonMenuPrincipal.pack_forget()
 
 
 texteTitre = Label(fenetre, text= "Le juste prix", font=("Arial", 20))
 texteTitre.pack(pady=20)
+
+texteBienvenue.pack(pady=10)
+defilementTexte(""" =======  Bienvenue dans le juste prix !  =======
+Vous avez droit à plusieurs possibilités pour trouver le juste prix.
+Après cinq erreurs, c'est terminé.
+Bonne chance à vous !
+""")
 
 boutonFacile = Button(fenetre, text="Facile", font=("Arial", 12), command=modeFacile)
 boutonFacile.pack(pady=10)
